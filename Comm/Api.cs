@@ -48,7 +48,7 @@ namespace NEL.Comm
                     break;
                 // 获取资产列表
                 case "getAssetList":
-                    result = exchangeService.getAssetList(int.Parse(req.@params[0].ToString()), int.Parse(req.@params[1].ToString()));
+                    result = exchangeService.getAssetList(req.@params[0].ToString(), int.Parse(req.@params[1].ToString()), int.Parse(req.@params[2].ToString()));
                     break;
                 case "getnodetype":
                     result = new JArray { new JObject { { "nodeType", netnode } } };

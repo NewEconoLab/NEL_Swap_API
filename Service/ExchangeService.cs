@@ -34,9 +34,13 @@ namespace NEL_Swap_API.Service
 
             return new JArray { new JObject { { "currency_pair", "USDCNY"},{"rate",rate } } };
         }
-        public JArray getAssetList(int pageNum=1, int pageSize=10)
+        public JArray getAssetList(string assetName, int pageNum=1, int pageSize=10)
         {
             string findStr = "{}";
+            if (assetName != "")
+            {
+                findStr = new JObject() { { "symbol", new JObject() { { "$regex", assetName }, { "$options", "i" } } } }.ToString();
+            }
             string sortStr = new JObject { {"name",1} }.ToString();
             string fieldStr = new JObject { { "assetid", 1 }, { "name", 1 }, { "symbol", 1 }, { "picUrl", 1 }, { "_id", 0 } }.ToString();
             var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, assetInfoCol, findStr, sortStr, pageSize*(pageNum-1),pageSize, fieldStr);

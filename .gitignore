@@ -252,5 +252,5 @@ paket-files/
 PublishProfiles
 /neo-cli/peers.dat
 /neo-cli/ChainTestNet2
-/NEL_Wallet_API/mongodbsettings.json
-/NEL_Wallet_API/*.txt
+*.json
+*.txt

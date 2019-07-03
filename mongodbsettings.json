@@ -1,8 +1,0 @@
-﻿{
-  "notify_mongodbConnStr_testnet": "",
-  "notify_mongodbDatabase_testnet": "",
-  "notify_mongodbConnStr_mainnet": "",
-  "notify_mongodbDatabase_mainnet": "",
-
-  "startMonitorFlag": 0
-}
