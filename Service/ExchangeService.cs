@@ -42,7 +42,7 @@ namespace NEL_Swap_API.Service
                 findStr = new JObject() { { "symbol", new JObject() { { "$regex", assetName }, { "$options", "i" } } } }.ToString();
             }
             string sortStr = new JObject { {"name",1} }.ToString();
-            string fieldStr = new JObject { { "assetid", 1 }, { "name", 1 }, { "symbol", 1 }, { "picUrl", 1 }, { "_id", 0 } }.ToString();
+            string fieldStr = new JObject { { "assetid", 1 }, { "name", 1 }, { "symbol", 1 },{ "decimals",1}, { "picUrl", 1 }, { "_id", 0 } }.ToString();
             var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, assetInfoCol, findStr, sortStr, pageSize*(pageNum-1),pageSize, fieldStr);
             if (queryRes == null || queryRes.Count == 0) return new JArray { };
 
