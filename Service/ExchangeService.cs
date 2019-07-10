@@ -20,6 +20,7 @@ namespace NEL_Swap_API.Service
 
         public JArray getUinTotal(string contractHash, string address = "")
         {
+            if (!contractHash.StartsWith("0x")) contractHash = "0x" + contractHash;
             var findJo = new JObject { { "contractHash", contractHash } };
             if(address != "")
             {
