@@ -71,7 +71,7 @@ namespace NEL_Swap_API.Service
                 { "tokenHash", tokenHash},
             }.ToString();
             string sortStr = "{}";
-            string fieldStr = new JObject { { "hash",1},{ "_id",0} }.ToString();
+            string fieldStr = new JObject { { "contractHash",1},{ "_id",0} }.ToString();
             var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, poolInfoCol, findStr, sortStr, 0,1,fieldStr);
             return queryRes;
         }
