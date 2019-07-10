@@ -14,6 +14,8 @@ namespace NEL.NNS.lib
         public string notify_mongodbDatabase_testnet = string.Empty;
         public string notify_mongodbConnStr_mainnet = string.Empty;
         public string notify_mongodbDatabase_mainnet = string.Empty;
+        public string swapAdmHash = string.Empty;
+        public string swapExcHash = string.Empty;
         //
         public string isStartRechargeFlag = string.Empty;
         public string isStartApplyGasFlag = string.Empty;
@@ -31,6 +33,9 @@ namespace NEL.NNS.lib
             notify_mongodbDatabase_testnet = config["notify_mongodbDatabase_testnet"];
             notify_mongodbConnStr_mainnet = config["notify_mongodbConnStr_mainnet"];
             notify_mongodbDatabase_mainnet = config["notify_mongodbDatabase_mainnet"];
+
+            swapAdmHash = config["swapAdmHash"];
+            swapExcHash = config["swapExcHash"];
             
             //
             startMonitorFlag = config["startMonitorFlag"];

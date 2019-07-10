@@ -28,6 +28,8 @@ namespace NEL.Comm
                         mh = mh,
                         notify_mongodbConnStr = mh.notify_mongodbConnStr_testnet,
                         notify_mongodbDatabase = mh.notify_mongodbDatabase_testnet,
+                        swapAdmCol = mh.swapAdmHash,
+                        swapExcCol = mh.swapExcHash
                     };
                     break;
                 case "mainnet":
@@ -41,6 +43,16 @@ namespace NEL.Comm
             {
                 switch (req.method)
                 {
+                    // 
+                    case "getLiquidityRate":
+                        result = exchangeService.getLiquidityRate(req.@params[0].ToString(), req.@params[1].ToString());
+                        break;
+                    case "getLiquidityHash":
+                        result = exchangeService.getLiquidityHash(req.@params[0].ToString(), req.@params[1].ToString());
+                        break;
+                    case "getLiquidityInfo":
+                        result = exchangeService.getLiquidityInfo(req.@params[0].ToString(), req.@params[1].ToString());
+                        break;
                     // 获取GAS/USD价格
                     case "getExchangePrice":
                         result = exchangeService.getExchangePrice();

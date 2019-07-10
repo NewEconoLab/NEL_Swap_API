@@ -1,5 +1,6 @@
 ﻿using NEL.NNS.lib;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace NEL_Swap_API.Service
 {
@@ -11,6 +12,68 @@ namespace NEL_Swap_API.Service
         public string assetInfoCol { get; set; } = "swapAssetInfo";
         public string exchangeRateInfoCol { get; set; } = "swapExchangeRateInfo";
         public string exchangePriceInfoCol { get; set; } = "swapExchangePriceInfo";
+        public string poolInfoCol { get; set; } = "swapPoolInfo";
+        public string swapAdmCol { get; set; } = "";
+        public string swapExcCol { get; set; } = "";
+
+        public JArray getUinTotal(string hash, string address = "{}")
+        {
+            var findJo = new JObject { { "hash", hash } };
+            if(address != "{}")
+            {
+                findJo.Add("address", address);
+            }
+            string findStr = findJo.ToString();
+            var list = new List<string>();
+            
+
+            return null;
+        }
+        public JArray getLiquidityRate(string assetHash, string tokenHash)
+        {
+            if (!assetHash.StartsWith("0x")) assetHash = "0x" + assetHash;
+            if (!tokenHash.StartsWith("0x")) tokenHash = "0x" + tokenHash;
+            string findStr = new JObject {
+                { "assetHash", assetHash},
+                { "tokenHash", tokenHash},
+            }.ToString();
+            string sortStr = "{}";
+            string fieldStr = new JObject { { "ratio", 1 }, { "_id", 0 } }.ToString();
+            var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, swapAdmCol, findStr, sortStr, 0,1, fieldStr);
+            if (queryRes.Count == 0) return queryRes;
+
+            var res = new JArray { new JObject {
+                {"ratio", queryRes[0]["ratio"].ToString()},
+                {"exchangeFee", (decimal.Parse(queryRes[0]["ratio"].ToString()) * 10000).ToString() }
+            } };
+            return res;
+        }
+        public JArray getLiquidityHash(string assetHash, string tokenHash)
+        {
+            if (!assetHash.StartsWith("0x")) assetHash = "0x" + assetHash;
+            if (!tokenHash.StartsWith("0x")) tokenHash = "0x" + tokenHash;
+            string findStr = new JObject {
+                { "assetHash", assetHash},
+                { "tokenHash", tokenHash},
+            }.ToString();
+            string sortStr = "{}";
+            string fieldStr = new JObject { { "hash",1},{ "_id",0} }.ToString();
+            var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, poolInfoCol, findStr, sortStr, 0,1,fieldStr);
+            return queryRes;
+        }
+        public JArray getLiquidityInfo(string assetHash, string tokenHash)
+        {
+            if (!assetHash.StartsWith("0x")) assetHash = "0x" + assetHash;
+            if (!tokenHash.StartsWith("0x")) tokenHash = "0x" + tokenHash;
+            string findStr = new JObject {
+                { "assetHash", assetHash},
+                { "tokenHash", tokenHash},
+            }.ToString();
+            string sortStr = new JObject { { "time", -1 } }.ToString();
+            string fieldStr = new JObject { { "assetTotal", 1 }, { "tokenTotal", 1 },{ "_id",0} }.ToString();
+            var queryRes = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, poolInfoCol, findStr, sortStr, 0, 1, fieldStr);
+            return queryRes;
+        }
 
         public JArray getExchangePrice()
         {
