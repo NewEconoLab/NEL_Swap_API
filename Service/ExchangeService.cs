@@ -15,19 +15,32 @@ namespace NEL_Swap_API.Service
         public string poolInfoCol { get; set; } = "swapPoolInfo";
         public string swapAdmCol { get; set; } = "";
         public string swapExcCol { get; set; } = "";
+        public string swapUniUserCol { get; set; } = "swapUniUserState";
+        public string swapUniPoolCol { get; set; } = "swapUniPoolState";
 
-        public JArray getUinTotal(string hash, string address = "{}")
+        public JArray getUinTotal(string contractHash, string address = "")
         {
-            var findJo = new JObject { { "hash", hash } };
-            if(address != "{}")
+            var findJo = new JObject { { "contractHash", contractHash } };
+            if(address != "")
             {
                 findJo.Add("address", address);
             }
             string findStr = findJo.ToString();
-            var list = new List<string>();
-            
+            string sortStr = "{}";
+            string fieldStr = new JObject { { "uniMinted", 1},{ "_id",0} }.ToString();
+            JArray res = null;
+            if(address != "")
+            {
+                res = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, swapUniUserCol, findStr, sortStr, 0, 1, fieldStr);
+            } else
+            {
+                res = mh.GetData(notify_mongodbConnStr, notify_mongodbDatabase, swapUniPoolCol, findStr, sortStr, 0, 1, fieldStr);
+            }
+            if (res == null || res.Count == 0) return new JArray { };
 
-            return null;
+            return new JArray { new JObject { { "uniMinted", MongoDecimalHelper.formatDecimal(res[0]["uniMinted"].ToString()) } } };
+
+            
         }
         public JArray getLiquidityRate(string assetHash, string tokenHash)
         {

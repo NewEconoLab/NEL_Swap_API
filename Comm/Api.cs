@@ -44,6 +44,15 @@ namespace NEL.Comm
                 switch (req.method)
                 {
                     // 
+                    case "getUinTotal":
+                        if(req.@params.Length < 2)
+                        {
+                            result = exchangeService.getUinTotal(req.@params[0].ToString());
+                        } else
+                        {
+                            result = exchangeService.getUinTotal(req.@params[0].ToString(), req.@params[1].ToString());
+                        }
+                        break;
                     case "getLiquidityRate":
                         result = exchangeService.getLiquidityRate(req.@params[0].ToString(), req.@params[1].ToString());
                         break;
