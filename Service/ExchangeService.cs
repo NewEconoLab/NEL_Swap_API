@@ -9,7 +9,7 @@ namespace NEL_Swap_API.Service
         public MongoHelper mh { get; set; }
         public string notify_mongodbConnStr { get; set; }
         public string notify_mongodbDatabase { get; set; }
-        public string assetInfoCol { get; set; } = "swapAssetInfo";
+        public string assetInfoCol { get; set; } = "swapAssetState";
         public string exchangeRateInfoCol { get; set; } = "swapExchangeRateInfo";
         public string exchangePriceInfoCol { get; set; } = "swapExchangePriceInfo";
         public string poolInfoCol { get; set; } = "swapPoolInfo";
